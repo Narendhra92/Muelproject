@@ -14,6 +14,7 @@ http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/cu
 	</db:config>
 	<flow name="mysql_foreachFlow" doc:id="663c147d-bbe2-4568-b0b8-4f446255c563" >
 		<http:listener doc:name="Listener" doc:id="54feaa0d-bd86-4db6-b2c1-69b7c7feb2d4" config-ref="HTTP_Listener_config" path="Mysql_foreach"/>
+		<logger level="INFO" doc:name="Logger" doc:id="7599b2e1-9800-40a6-9d33-16878b796bb2" message="hi"/>
 		<ee:transform doc:name="Transform Message" doc:id="e9b5fe33-0b1e-4456-9cc1-729f695f4dee" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
