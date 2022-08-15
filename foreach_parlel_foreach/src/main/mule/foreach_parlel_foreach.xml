@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="db02803c-1ff3-4b11-883b-7a219ad74a78" >
+		<http:listener-connection host="0.0.0.0" port="8082" />
+	</http:listener-config>
+	<flow name="foreach_parlel_foreachFlow1" doc:id="0aaedddd-0737-45f2-a7cc-d74318836b49" >
+		<http:listener doc:name="Listener" doc:id="7c8bc207-2ea7-4faa-951a-b6a4a6194dda" config-ref="HTTP_Listener_config" path="for_each"/>
+		<ee:transform doc:name="Transform Message" doc:id="8d4170cb-abd4-4a9b-9c27-2fc1d6baac00" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+1 to 10 map
+{
+	id:20+$$,
+	name:"naren",
+	Lname:"reddy",
+	add:"PTP"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="foreach_parlel_foreachFlow" doc:id="5bc5bfa8-c031-4c5f-a7b8-3884597b6323" >
+		<http:listener doc:name="Listener" doc:id="bc55fcdc-bd57-4879-bc17-28f13012019a" config-ref="HTTP_Listener_config" path="Parlel_foreach"/>
+		<ee:transform doc:name="Transform Message" doc:id="7643a1fe-e3b7-4e0e-a063-8c6f9d2dcaa2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+1 to 10 map
+{
+	
+	id:20+$$,
+	name:"Naren",
+	lname:"reddy",
+	add:"HYD"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<foreach doc:name="For Each" doc:id="de0c0aa8-9c2e-4b88-8b69-9eec538fb930" >
+			<logger level="INFO" doc:name="Logger" doc:id="6af71cb9-988f-4d89-9b7b-9ab220a8ce7b" message="#[payload]"/>
+		</foreach>
+	</flow>
+</mule>
